@@ -4,6 +4,7 @@
   become_method: sudo
   roles:
     - role: env-common-scheleaap
+      tags: common
 
 - hosts: desktop
   become_user: root
@@ -11,10 +12,5 @@
   roles:
 #    - role: work
     - role: env-desktop-scheleaap
+      tags: desktop
 
-- hosts: docker
-  become: true
-  become_user: root
-  become_method: sudo
-  roles:
-    - role: docker

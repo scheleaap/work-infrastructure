@@ -45,17 +45,24 @@ PATH="$HOME/.local/bin:$PATH"
 
 if [[ "$PREPARE_ENVIRONMENT" == "true" ]]
 then
-  echo "Installing Pipenv"
-  sudo apt install --yes python3-pip
-  pip3 install --user pipenv
+  echo "Installing Pipx"
+  sudo apt install --yes pipx
 
-  if [[ ! -d ${repo_name} ]]; then
+  echo "Installing Ansible"
+  pipx install ansible-core
+
+  if [[ ! -d $HOME/${repo_name} ]]; then
     echo "Cloning git repository"
     git clone --depth=1 ${repo_url} $HOME/${repo_name}
   fi
 
   cd $HOME/${repo_name}
-  pipenv sync
+
+  echo "Installing Ansible collections"
+  ansible-galaxy collection install -r requirements.yml
+
+  echo "Installing Ansible roles"
+  ansible-galaxy install -r requirements.yml -p roles/
 fi
 
 if [[ "$EDIT_CONFIG" == "true" ]]
@@ -71,9 +78,6 @@ if [[ "$RUN_PLAYBOOK" == "true" ]]
 then
   cd $HOME/${repo_name}
 
-  echo "Installing Ansible roles"
-  pipenv run ansible-galaxy install -r requirements.yml -p roles/
-
   echo "Running Ansible playbook"
-  pipenv run ansible-playbook -i "hosts" site.yml --ask-become-pass
+  ansible-playbook -i "hosts" site.yml --ask-become-pass
 fi

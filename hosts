@@ -1,10 +1,6 @@
-# Default inventory file
-
 localhost ansible_connection=local
 #other.example.com ansible_python_interpreter=auto
 
 [desktop]
-#localhost
-
-[docker]
 localhost
+
