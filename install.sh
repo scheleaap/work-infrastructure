@@ -48,8 +48,8 @@ then
   echo "Installing Pipx"
   sudo apt install --yes pipx
 
-  echo "Installing Ansible"
-  pipx install ansible-core
+  echo "Installing Uv"
+  pipx install uv
 
   if [[ ! -d $HOME/${repo_name} ]]; then
     echo "Cloning git repository"
@@ -57,6 +57,12 @@ then
   fi
 
   cd $HOME/${repo_name}
+
+  echo "Installing virtual environment"
+  $HOME/.local/bin/uv sync
+
+  echo "Activating virtual environment"
+  source .venv/bin/activate
 
   echo "Installing Ansible collections"
   ansible-galaxy collection install -r requirements.yml
