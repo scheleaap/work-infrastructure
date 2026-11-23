@@ -1,9 +1,8 @@
 ---
-# Replace the <TODO: ...> values below (including the <>)
-env_common_username: <TODO: your Linux user account name>
-env_common_git_user_email: <TODO: your *work* e-mail addess for Git>
-env_common_git_user_name: <TODO: your *work* username for Git>
-env_common_git_cache_timeout: 32400
-env_common_zsh_git_user_name: <TODO: your *private* e-mail addess for Git>
-env_common_zsh_git_user_email: <TODO: your *private* username for Git>
-
+# Replace the TODO values below
+env_common_username: TODO # Your Linux user account name
+env_common_git_user_email: TODO # Your *work* e-mail addess for Git
+env_common_git_user_name: TODO # Your *work* username for Git
+env_common_git_cache_timeout: 3240
+env_common_zsh_git_user_email: TODO # Your *private* e-mail addess for Git
+env_common_zsh_git_user_name: TODO # Your *private* username for Git

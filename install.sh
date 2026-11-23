@@ -42,6 +42,7 @@ echo "EDIT_CONFIG: $EDIT_CONFIG"
 echo "RUN_PLAYBOOK: $RUN_PLAYBOOK"
 
 PATH="$HOME/.local/bin:$PATH"
+PARENT_DIR="$HOME"
 
 if [[ "$PREPARE_ENVIRONMENT" == "true" ]]
 then
@@ -51,15 +52,15 @@ then
   echo "Installing Uv"
   pipx install uv
 
-  if [[ ! -d $HOME/${repo_name} ]]; then
+  if [[ ! -d "$PARENT_DIR/${repo_name}" ]]; then
     echo "Cloning git repository"
-    git clone --depth=1 ${repo_url} $HOME/${repo_name}
+    git clone --depth=1 "${repo_url}" "$PARENT_DIR/${repo_name}"
   fi
 
-  cd $HOME/${repo_name}
+  cd "$PARENT_DIR/${repo_name}"
 
   echo "Installing virtual environment"
-  $HOME/.local/bin/uv sync
+  $PARENT_DIR/.local/bin/uv sync
 
   echo "Activating virtual environment"
   source .venv/bin/activate
@@ -73,7 +74,7 @@ fi
 
 if [[ "$EDIT_CONFIG" == "true" ]]
 then
-  cd $HOME/${repo_name}
+  cd "$PARENT_DIR/${repo_name}"
 
   echo "Allowing user to edit the Ansible configuration"
   cp group_vars/all/vars.yml.sample group_vars/all/vars.yml
@@ -82,7 +83,7 @@ fi
 
 if [[ "$RUN_PLAYBOOK" == "true" ]]
 then
-  cd $HOME/${repo_name}
+  cd "$PARENT_DIR/${repo_name}"
 
   echo "Running Ansible playbook"
   ansible-playbook -i "hosts" site.yml --ask-become-pass
